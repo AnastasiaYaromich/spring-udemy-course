@@ -1,21 +1,16 @@
 package com.yaromich.spring;
 
-import com.yaromich.spring.ioc.Container;
-import com.yaromich.spring.service.UserService;
+import com.yaromich.spring.repository.CompanyRepository;
+import com.yaromich.spring.repository.pool.ConnectionPool;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class ApplicationRunner {
     public static void main(String[] args) {
-        Container container = new Container();
-
-//        ConnectionPool connectionPool = new ConnectionPool();
-//        UserRepository userRepository = new UserRepository(connectionPool);
-//        CompanyRepository companyRepository = new CompanyRepository(connectionPool);
-//        UserService userService = new UserService(userRepository, companyRepository);
-
-//        ConnectionPool connectionPool = container.get(ConnectionPool.class);
-//        UserRepository userRepository = container.get(UserRepository.class);
-//        CompanyRepository companyRepository = container.get(CompanyRepository.class);
-
-        UserService userService = container.get(UserService.class);
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("application.xml");
+        ConnectionPool connectionPool = context.getBean("p1", ConnectionPool.class);
+        System.out.println(connectionPool);
+        CompanyRepository companyRepository = context.getBean("companyRepository", CompanyRepository.class);
+        System.out.println(companyRepository);
+        context.close();
     }
 }
