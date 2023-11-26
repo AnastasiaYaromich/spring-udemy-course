@@ -7,25 +7,22 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-    <context:property-placeholder location="classpath:application.properties"/>
+    <context:property-placeholder location="application.properties"/>
 
-<!--    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">-->
-<!--        <property name="locations" value="classpath:application.properties"/>-->
-<!--    </bean>-->
+    <bean class="com.yaromich.spring.bfpp.LogBeanFactoryPostProcessor"/>
+    <bean class="com.yaromich.spring.bfpp.VerifyPropertyBeanFactoryPostProcessor"/>
 
-    <!-- bean definitions-->
     <bean id="driver" class="java.lang.String">
-        <constructor-arg type="java.lang.String" value="${db.driver}"/>
+        <constructor-arg  value="${db.driver}"/>
     </bean>
 
-    <bean id="pool1" name="p1,p2,p3" class="com.yaromich.spring.repository.pool.ConnectionPool"
-          init-method="init"
-          destroy-method="destroy">
-        <constructor-arg name="username" type="java.lang.String" value="${db.username}"/>
+    <bean id="pool1" name="p1, p2, p3" class="com.yaromich.spring.repository.pool.ConnectionPool">
+        <constructor-arg name="username" type="java.lang.String" value="postgres"/>
         <constructor-arg name="properties" type="java.util.Map">
             <null/>
         </constructor-arg>
-        <constructor-arg name="poolSize" type="java.lang.Integer" value="${db.pool.size}"/>
+
+        <constructor-arg name="poolSize" type="java.lang.Integer" value="10"/>
         <constructor-arg name="args" type="java.util.List">
             <list>
                 <value>--arg1=value1</value>
@@ -33,23 +30,65 @@
                 <ref bean="driver"/>
             </list>
         </constructor-arg>
-
         <property name="properties">
             <map>
                 <entry key="url" value="postgresurl"/>
                 <entry key="password" value="123"/>
-                <entry key="driver" value="#{driver.substring(3)}"/>
-                <entry key="test" value="#{driver.length() > 10}"/>
-                <entry key="test" value="#{driver.length() > T(Math).random() * 10}"/>
-                <entry key="hosts" value="#{'${db.hosts}'.split(',')}"/>
-                <entry key="currentUser" value="#{systemProperties['user.name']}"/>
+                <entry key="driver" value-ref="driver"/>
             </map>
         </property>
-
     </bean>
 
     <bean id="companyRepository" class="com.yaromich.spring.repository.CompanyRepository" factory-method="of">
         <constructor-arg ref="pool1"/>
     </bean>
+
+
+
+    <!--    <bean id="pool2" name="p4" class="com.yaromich.spring.repository.pool.ConnectionPool"/>-->
+
+
+
+<!--    <context:property-placeholder location="classpath:application.properties"/>-->
+
+
+<!--    &lt;!&ndash; bean definitions&ndash;&gt;-->
+<!--    <bean id="driver" class="java.lang.String">-->
+<!--        <constructor-arg type="java.lang.String" value="${db.driver}"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="pool1" name="p1,p2,p3" class="com.yaromich.spring.repository.pool.ConnectionPool"-->
+<!--          init-method="init"-->
+<!--          destroy-method="destroy">-->
+<!--        <constructor-arg name="username" type="java.lang.String" value="${db.username}"/>-->
+<!--        <constructor-arg name="properties" type="java.util.Map">-->
+<!--            <null/>-->
+<!--        </constructor-arg>-->
+<!--        <constructor-arg name="poolSize" type="java.lang.Integer" value="${db.pool.size}"/>-->
+<!--        <constructor-arg name="args" type="java.util.List">-->
+<!--            <list>-->
+<!--                <value>&#45;&#45;arg1=value1</value>-->
+<!--                <value>&#45;&#45;arg2=value2</value>-->
+<!--                <ref bean="driver"/>-->
+<!--            </list>-->
+<!--        </constructor-arg>-->
+
+<!--        <property name="properties">-->
+<!--            <map>-->
+<!--                <entry key="url" value="postgresurl"/>-->
+<!--                <entry key="password" value="123"/>-->
+<!--                <entry key="driver" value="#{driver.substring(3)}"/>-->
+<!--                <entry key="test" value="#{driver.length() > 10}"/>-->
+<!--                <entry key="test" value="#{driver.length() > T(Math).random() * 10}"/>-->
+<!--                <entry key="hosts" value="#{'${db.hosts}'.split(',')}"/>-->
+<!--                <entry key="currentUser" value="#{systemProperties['user.name']}"/>-->
+<!--            </map>-->
+<!--        </property>-->
+
+<!--    </bean>-->
+
+<!--    <bean id="companyRepository" class="com.yaromich.spring.repository.CompanyRepository" factory-method="of">-->
+<!--        <constructor-arg ref="pool1"/>-->
+<!--    </bean>-->
 
 </beans>
