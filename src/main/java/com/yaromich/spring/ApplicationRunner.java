@@ -1,7 +1,8 @@
 package com.yaromich.spring;
 
-import com.yaromich.spring.repository.CompanyRepository;
-import com.yaromich.spring.repository.pool.ConnectionPool;
+
+import com.yaromich.spring.database.pool.ConnectionPool;
+import com.yaromich.spring.database.repository.CrudRepository;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class ApplicationRunner {
@@ -9,7 +10,11 @@ public class ApplicationRunner {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("application.xml");
         ConnectionPool connectionPool = context.getBean("pool1", ConnectionPool.class);
         System.out.println(connectionPool);
-        CompanyRepository companyRepository = context.getBean("companyRepository", CompanyRepository.class);
-        System.out.println(companyRepository);
+
+
+        var companyRepository = context.getBean("companyRepository", CrudRepository.class);
+        System.out.println(companyRepository.findById(1));
+        context.close();
+
     }
 }

@@ -5,7 +5,13 @@ import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.core.Ordered;
 import org.springframework.core.PriorityOrdered;
+<<<<<<< HEAD
 
+=======
+import org.springframework.stereotype.Component;
+
+@Component
+>>>>>>> annotationConfig
 public class LogBeanFactoryPostProcessor implements BeanFactoryPostProcessor, PriorityOrdered {
 
     @Override
@@ -17,4 +23,8 @@ public class LogBeanFactoryPostProcessor implements BeanFactoryPostProcessor, Pr
     public int getOrder() {
         return Ordered.HIGHEST_PRECEDENCE;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> annotationConfig

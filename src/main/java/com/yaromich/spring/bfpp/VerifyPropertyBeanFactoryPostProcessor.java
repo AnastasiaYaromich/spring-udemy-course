@@ -4,7 +4,13 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.core.Ordered;
+<<<<<<< HEAD
 
+=======
+import org.springframework.stereotype.Component;
+
+@Component
+>>>>>>> annotationConfig
 public class VerifyPropertyBeanFactoryPostProcessor implements BeanFactoryPostProcessor, Ordered {
 
     @Override
